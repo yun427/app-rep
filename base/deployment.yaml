@@ -19,13 +19,7 @@ spec:
         image: 192.168.2.92/jenkins/message-server # 标签将由kustomize添加
         imagePullPolicy: Always
         ports:
-        - containerPort: 8080
-        env:
-        - name: SPRING_PROFILES_ACTIVE
-          valueFrom:
-            configMapKeyRef:
-              name: message-server-config
-              key: spring.profiles.active
+        - containerPort: 22339
         resources:
           limits:
             memory: "512Mi"
@@ -36,13 +30,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 22339
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /actuator/health
-            port: 8080
+            port: 22339
           initialDelaySeconds: 15
           periodSeconds: 5
       imagePullSecrets:
