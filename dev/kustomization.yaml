@@ -7,4 +7,5 @@ patches:
 - deployment-patch.yaml
 images:
 - name: message-server
-  newTag: dev-v1
+  newTag: dev-v130
+
