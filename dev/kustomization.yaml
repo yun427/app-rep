@@ -2,9 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: message-server-dev
 resources:
-- ../base
+  - ../base
 patches:
-- deployment-patch.yaml
+  - deployment-patch.yaml
 images:
-- name: message-server
-  newTag: dev-v130
+  - name: message-server
+    newTag: dev-v133
+    newName: 192.168.2.92/jenkins/message-server
