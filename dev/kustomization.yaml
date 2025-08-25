@@ -8,4 +8,3 @@ patches:
 images:
 - name: message-server
   newTag: dev-v130
-
