@@ -7,5 +7,5 @@ patches:
   - deployment-patch.yaml
 images:
   - name: message-server
-    newTag: dev-v133
+    newTag: dev-v134
     newName: 192.168.2.92/jenkins/message-server
