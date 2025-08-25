@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: message-server
+  labels:
+    app: message-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: message-server
+  template:
+    metadata:
+      labels:
+        app: message-server
+    spec:
+      containers:
+      - name: message-server
+        image: 192.168.2.92/jenkins/message-server # 标签将由kustomize添加
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          valueFrom:
+            configMapKeyRef:
+              name: message-server-config
+              key: spring.profiles.active
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 5
+      imagePullSecrets:
+      - name: harbor-secret
